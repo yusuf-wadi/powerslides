@@ -20,4 +20,7 @@ Current Text directory is a sample input and output from the program
 
 Feel free to delete
 
+# Important ⚠️
+
+### Make sure to set OPENAI_API_KEY in environment variables
 

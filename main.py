@@ -4,6 +4,7 @@ import streamlit as st
 import pandoc 
 import os
 import subprocess
+
 # set OPENAI_API_KEY in your environment variables
 chat = OpenAIChat(model_name='gpt-3.5-turbo', client=None)
 
