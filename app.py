@@ -13,8 +13,11 @@ def generate(prompt):
     return response.generations[0][0].text
 
 if __name__ == '__main__':
+    
     content = st.text_input("Enter content to generate a lesson from:")
-    if content:
+    button = st.button("Generate Lesson")
+    # only generate when user presses submit
+    if button and content:
         prompt = [f"create a teachable lesson from this content:{content}\
             \n\n ensure the format is in this fashion, use markdown convention:\n\
                 # [SLIDE TITLE]\n\
@@ -25,15 +28,22 @@ if __name__ == '__main__':
         
         slides = generate(prompt)
         st.write(slides)
-        slide_title = slides.split("#")[1].split("\n")[0].strip()
+        # no spaces in file names
+        slide_title = slides.split("#")[1].split("\n")[0].replace(" ", "_")
+        print(slide_title)
         
+        md_file = f"{slide_title}_lesson.md"
+        pptx_file = f"{slide_title}_lesson.pptx"
         if not os.path.exists("text/"):
             os.makedirs("text/")
-        with open("text/" + "lesson.md", "w") as f:
+        with open("text/" + md_file, "w", encoding="utf-8") as f:
             f.write(slides)
         if not os.path.exists("slides/"):   
             os.makedirs("slides/")
             
         # convert to pptx using pandoc
-        subprocess.call(["pandoc", "text/" + "lesson.md", "-o", "slides" + "lesson.pptx"])
+        subprocess.call(["pandoc", "text/" + md_file, "-o", "slides/" + pptx_file])
         st.write("Done! Check the slides folder for your lesson")
+        with open("slides/" + pptx_file, "rb") as f:
+            file_data = f.read()
+            st.download_button("Download Lesson", file_data, file_name=pptx_file)
