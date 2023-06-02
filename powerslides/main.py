@@ -5,17 +5,19 @@ import pandoc
 import os
 import subprocess
 import sys
-import openai.error
-
+from openai.error import AuthenticationError
+from pydantic.error_wrappers import ValidationError
 # set OPENAI_API_KEY in your environment variables
-
 
 def generate(prompt):
     chat = OpenAIChat(model_name='gpt-3.5-turbo', client=None, openai_api_key=st.session_state.get("OPENAI_API_KEY"))
     try:
         response = chat.generate(prompt)
         return response.generations[0][0].text
-    except openai.error.AuthenticationError:
+    except AuthenticationError:
+        st.error("⚠️ Please set the correct key in the sidebar -> see help icon")
+        return ""
+    except ValidationError:
         st.error("⚠️ Please set the correct key in the sidebar -> see help icon")
         return ""
 
@@ -26,17 +28,17 @@ def main():
     if button and content:
         prompt = [f"create a teachable lesson from this content:{content}\
             \n\n ensure the format is in this fashion, use markdown convention:\n\
-                # [SLIDE TITLE]\n\
-                [slide content]\n\
+                # [SLIDE1 TITLE]\n\
+                [slide1 content]\n\
                 ---\
-                # [SLIDE TITLE]\n\
+                # [SLIDE2 TITLE]\n\
                 etc..."]
         
         slides = generate(prompt)
         st.write(slides)
-        # no spaces in file names
+        # no spaces or colon in file names
         if "#" in slides:
-            slide_title = slides.split("#")[1].split("\n")[0].replace(" ", "_")
+            slide_title = slides.split("#")[1].split("\n")[0].replace(" ", "").replace(":", "")
             print(slide_title)
             
             text_folder = "text/"
@@ -55,4 +57,4 @@ def main():
             st.write("Done! Check the slides folder for your lesson")
             with open(slides_folder + pptx_file, "rb") as f:
                 file_data = f.read()
-                st.download_button("Download Lesson", file_data, file_name=pptx_file)
+            st.download_button("Download Lesson", file_data, file_name=pptx_file)

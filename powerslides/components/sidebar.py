@@ -1,8 +1,9 @@
 ﻿import streamlit as st
 
+
+
 def set_openai_api_key(api_key: str):
     st.session_state["OPENAI_API_KEY"] = api_key
-
 
 def sidebar():
     with st.sidebar:
@@ -21,11 +22,10 @@ def sidebar():
             type="password",
             placeholder="Paste your OpenAI API key here (sk-...)",
             help="You can get your API key from https://platform.openai.com/account/api-keys.",  
-            value=st.session_state.get("OPENAI_API_KEY", ""),
+            value=st.session_state.get("OPENAI_API_KEY", "")
         )
-        save = st.button("Save")
         
-        if api_key_input and save:
+        if api_key_input:
             set_openai_api_key(api_key_input)
 
         st.markdown("---")
