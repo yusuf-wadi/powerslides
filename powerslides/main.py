@@ -10,8 +10,8 @@ from pydantic.error_wrappers import ValidationError
 # set OPENAI_API_KEY in your environment variables
 
 def generate(prompt):
-    chat = OpenAIChat(model_name='gpt-3.5-turbo', client=None, openai_api_key=st.session_state.get("OPENAI_API_KEY"))
     try:
+        chat = OpenAIChat(model_name='gpt-3.5-turbo', client=None, openai_api_key=st.session_state.get("OPENAI_API_KEY"))
         response = chat.generate(prompt)
         return response.generations[0][0].text
     except AuthenticationError:
