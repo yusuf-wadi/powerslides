@@ -2,3 +2,4 @@ langchain
 streamlit
 pandoc
 openai
+pydantic
