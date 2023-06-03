@@ -8,10 +8,10 @@ Simple. Drop text in. Get slides out.
 - open command line in repo directory
 - run
 ```
-streamlit run main.py
+make run-container
 ```
 
-- open in browser
+- open in browser (http://127.0.0.1:8080/)
 - njoy (?)
 
 ## Note
