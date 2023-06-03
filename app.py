@@ -1,4 +1,4 @@
-from main import main
+from components.main import main
 from components.sidebar import sidebar
 import streamlit as st
 

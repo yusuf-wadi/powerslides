@@ -41,8 +41,8 @@ def main():
             slide_title = slides.split("#")[1].split("\n")[0].replace(" ", "").replace(":", "")
             print(slide_title)
             
-            text_folder = "text/"
-            slides_folder = "slides/"
+            text_folder = "data/text/"
+            slides_folder = "data/slides/"
             md_file = f"{slide_title}_lesson.md"
             pptx_file = f"{slide_title}_lesson.pptx"
             if not os.path.exists(text_folder):
