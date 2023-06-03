@@ -14,6 +14,7 @@ def sidebar():
             "1. Enter your [OpenAI API key](https://platform.openai.com/account/api-keys) below 🔽\n"  
             "2. Write your topic &or reference text 📜\n"
             "3. Press generate 🔮\n"
+            "4. Press download to get your PowerPoint presentation 💾\n"
         )
         st.markdown("## Tips:\n"
                     "📌 Use the PowerPoint Designer tab to really make the presentation pop\n")
@@ -36,7 +37,7 @@ def sidebar():
         )
         st.markdown(
             "This tool is a work in progress. "
-            "You can contribute to the project on [GitHub](https://github.com/yusuf-wadi/powerslides) "  
+            "Feel free to reach out to me through email\n"  
             "with your feedback and suggestions🏋️"
         )
         st.markdown("Made by [yusuf-wadi](https://github.com/yusuf-wadi)")

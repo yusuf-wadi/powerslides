@@ -7,6 +7,7 @@ import subprocess
 import sys
 from openai.error import AuthenticationError
 from pydantic.error_wrappers import ValidationError
+import tempfile
 # set OPENAI_API_KEY in your environment variables
 
 def generate(prompt):
@@ -41,8 +42,11 @@ def main():
             slide_title = slides.split("#")[1].split("\n")[0].replace(" ", "").replace(":", "")
             print(slide_title)
             
-            text_folder = "data/text/"
-            slides_folder = "data/slides/"
+            text_folder_dir = tempfile.TemporaryDirectory()#"/text/"
+            slides_folder_dir = tempfile.TemporaryDirectory()#"/slides/"
+            text_folder = text_folder_dir.name
+            slides_folder = slides_folder_dir.name
+            
             md_file = f"{slide_title}_lesson.md"
             pptx_file = f"{slide_title}_lesson.pptx"
             if not os.path.exists(text_folder):
