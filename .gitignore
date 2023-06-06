@@ -1,2 +1,3 @@
 arch_data/
 powerslides/secrets.toml
+*.env

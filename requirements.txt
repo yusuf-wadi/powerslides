@@ -1,5 +1,10 @@
 langchain
 streamlit
-pandoc
 openai
 pydantic
+streamlit-authenticator
+deta == 1.1.0
+stripe == 5.4.0
+flask
+python-decouple
+email-validator
