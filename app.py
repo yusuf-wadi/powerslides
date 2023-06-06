@@ -6,6 +6,7 @@ from components.app_auth import login
 from components.landing import landing
 import subprocess
 
+app_version = "0.0.1"
 # session state
 if "authentication_status" not in st.session_state:
     st.session_state['authentication_status'] = None
@@ -21,7 +22,7 @@ subprocess.Popen(["ruby" ,"server.rb"])
 
 if __name__ == '__main__':
     
-    st.title("🛝 PowerSlides")
+    st.title(f"🛝 PowerSlides v{app_version}")
     #st.markdown("<h5>Generate PowerPoint Slides from Text</h5>", unsafe_allow_html=True)
     
     if not st.session_state['authentication_status']:
