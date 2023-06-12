@@ -8,3 +8,6 @@ stripe == 5.4.0
 flask
 python-decouple
 email-validator
+twilio == 8.2.2
+phonenumbers == 8.13.13
+django == 4.2.2

@@ -12,9 +12,9 @@ from decouple import config as cfg
 # set OPENAI_API_KEY in env
 
 db = deta.Deta(cfg('DETA_KEY')).Base('users')
-st.session_state["OPENAI_API_KEY"] = cfg("OPENAI_API_KEY")
 
 def generate(prompt):
+    st.session_state["OPENAI_API_KEY"] = cfg("OPENAI_API_KEY")
     try:
         chat = OpenAIChat(model_name='gpt-3.5-turbo', client=None, openai_api_key=st.session_state.get("OPENAI_API_KEY"))
         response = chat.generate(prompt)
@@ -28,9 +28,9 @@ def generate(prompt):
 
 def main(): 
     content = st.text_area("Enter content or topic to generate a presentation:")
-    button = st.button("Generate Lesson") 
+    button = st.button("Generate Slides") 
     # only generate when user presses submit
-    if button and content and st.session_state['credits'] > 0:
+    if button and content:
         prompt = [f"create a teachable lesson from this content:{content}\
             \n\n IMPORTANT-> ensure the format is in this fashion, use markdown convention:\n\n\
                 # [SLIDE1 TITLE]\n\
@@ -40,14 +40,13 @@ def main():
                 [slide2 content]\n\
                 ---\n\
                 etc..."]
-        with st.spinner("Generating slides...\n Once done, you can download the slides below"):
-            slides = generate(prompt)
+        slides = generate(prompt)
         
         st.write(slides)
-        db.update({"credits": st.session_state['credits'] - 1}, key=st.session_state['username'])
-        st.session_state['credits'] = db.get(key=st.session_state['username'])['credits']
         # no spaces or colon in file names
         if "#" in slides:
+            db.update({"credits": st.session_state['credits'] + 1}, key=st.session_state['username'])
+            st.session_state['credits'] = db.get(key=st.session_state['username'])['credits']
             slide_title = slides.split("#")[1].split("\n")[0].replace(" ", "").replace(":", "")  
             text_folder_dir = tempfile.TemporaryDirectory()#"/text/"
             slides_folder_dir = tempfile.TemporaryDirectory()#"/slides/"

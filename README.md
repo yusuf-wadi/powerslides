@@ -1,4 +1,4 @@
-# PowerSlides 🛝
+# PowerSlides :racing_car:
 
 Simple. Drop text in. Get slides out.
 
